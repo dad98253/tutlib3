@@ -1,0 +1,34 @@
+/*
+ * tuterrors.h
+ *
+ *  Created on: Feb 10, 2016
+ *      Author: dad
+ */
+
+#ifndef TUTERRORS_H_
+#define TUTERRORS_H_
+
+#define SUCCESS					0
+#define NOTUTORFILE				1
+#define TUTORFILEOPENFAIL		2
+#define TUTINFILEOPENFAIL		4
+#define TUTOUTFILEOPENFAIL		8
+#define TUTLOGFILEOPENFAIL		16
+#define TUTDEBUGFILEOPENFAIL	32
+#define TUTORDAFILEOPENFAIL		64
+#define TUTORINDFILEOPENFAIL	128
+
+#define BADUDISPPCCALL			1
+#define BADUCVRTCCALL			1
+#define BADUPRSTRCCALL			1
+#define MALLOCFAILINTASKDONE	2
+
+
+#define RET_ABORTPROGRAM		0
+#define RETURN_OK				1
+#define SECRETBOXABORTED		1
+
+
+
+
+#endif /* TUTERRORS_H_ */
