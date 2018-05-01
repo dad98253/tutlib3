@@ -1,0 +1,6 @@
+.project
+.cproject
+/Debug/
+/Release/
+*.d
+*.o

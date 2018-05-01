@@ -18,11 +18,11 @@ int havemodeterminfo = 0;
 #ifdef WINDOZE
 unsigned long oldmodeterm = 0;
 unsigned long newmodeterm;
+extern HANDLE hStdin;
 #else
 termios oldmodeterm;
 termios newmodeterm;
 #endif
-extern HANDLE hStdin;
 
 int EchoOff(){
 	if ( havemodeterminfo == 0 ) {
