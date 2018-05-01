@@ -61,9 +61,11 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 //    int ncar = 12;
 	
     short unsigned int FileSize;
+#if defined(GENMEMFILE) || defined(DEBUG)
 	int iTutMemFileSize = 0;
+#endif	// GENMEMFILE || DEBUG
 #ifdef DEBUG
-		DumpSymbols("tutio");
+		DumpSymbols((char*)"tutio");
 #endif
 
 #ifdef GENMEMFILE
@@ -165,6 +167,9 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 
 
 // test tutor file
+#ifdef DEBUG
+		dfprintf(fp9, "memory file zlib version = \"%s\"\n",myzlibVersion);
+#endif
 	if ( !bGenMemFileSource ) uncomprMemFileSystem = ucMemFileSystemData;		// if we didn't just finished generating the
 																				// memory file system, use the old data that
 																				// previously compile in																				
