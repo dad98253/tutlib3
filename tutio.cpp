@@ -304,11 +304,11 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 	int NumCompressedRecords = 0;
 	if ( iMemFileFormat == 0 ) {
 // read the ascii "fort.1" tutor database file, process it and create the tutIndex.h and tutSource.61 files
-    if ( ( NumCompressedRecords = tutCompressAndIndexTutdb() ) < 0) {
-    	printf("error in tutCompressAndIndexTutdb\n");
-    }
+		if ( ( NumCompressedRecords = tutCompressAndIndexTutdb() ) < 0) {
+			printf("error in tutCompressAndIndexTutdb\n");
+		}
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"tutCompressAndIndexTutdb compressed %u records\n",NumCompressedRecords);
+		if (debugflag ) dfprintf(fp9,"tutCompressAndIndexTutdb compressed %u records\n",NumCompressedRecords);
 #endif
 
 //    Byte * lpTutMemFile;
@@ -320,19 +320,19 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 // NOTE: this will be the file system presently saved in tutSource.h and tutIndex.h files located in
 // your build directory, NOT the files created by tutCompressAndIndexTutdb above!
 
-    if ( LoadMemDir(&lpMemDir) < 0) {
-    	printf("error in LoadMemDir\n");
-    }
+		if ( LoadMemDir(&lpMemDir) < 0) {
+			printf("error in LoadMemDir\n");
+		}
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"LoadMemDir done\n");
+		if (debugflag ) dfprintf(fp9,"LoadMemDir done\n");
 #endif
 // load the tutorial database file from the memory file system
-    if ( LoadMemFile(&lpMemDir, "tutorDB.txt", &lpTutMemFile, FileSize) < 0) {
-    	printf("error in LoadMemFile\n");
-    }
-#ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"LoadMemFile done\n");
-#endif
+		if ( LoadMemFile(&lpMemDir, "tutorDB.txt", &lpTutMemFile, FileSize) < 0) {
+			printf("error in LoadMemFile\n");
+		}
+	#ifdef DEBUG
+		if (debugflag ) dfprintf(fp9,"LoadMemFile done\n");
+	#endif
 //	tutDisplayTextPromptx ( ENTER_MASTER_PASSWORD , 0 );   //  SET_MIN_BACKUP_AGE       MAIN_MENU
 //	tutDisplayTextPromptx ( NO_DATABASE , 0 );
 //	tutDisplayTextPromptx ( SET_MIN_BACKUP_AGE , 0 );
@@ -341,19 +341,19 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 // unload the memeory file system directory
 // NOTE : this frees up the entire uncompressed file system and thus, the lpTutMemFile pointer
 // found by LoadMemFile above will no longer be valid!
-    if ( UnloadMemDir(&lpMemDir) < 0) {
-    	printf("error in UnloadMemDir\n");
-    }
-#ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"UnloadMemDir done\n");
-#endif
+		if ( UnloadMemDir(&lpMemDir) < 0) {
+			printf("error in UnloadMemDir\n");
+		}
+	#ifdef DEBUG
+		if (debugflag ) dfprintf(fp9,"UnloadMemDir done\n");
+	#endif
 
 	}	//////////			end of if on iMemFileFormat
 
 
 
-    // load mem file system (format 1)
-	// initialize the system for building
+// load mem file system (format 1)
+// initialize the system for building
     int iDirSize = initMemFileSystem(30000, 10);
 #ifdef DEBUG
 	if (debugflag ) dfprintf(fp9,"initMemFileSystem returned dir size = %u\n",iDirSize);
