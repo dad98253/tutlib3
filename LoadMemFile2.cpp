@@ -57,9 +57,56 @@ int LoadMemFile2(const char * szFileName, Byte ** lpMemFile, short unsigned int 
 #endif
 
 	uncompr = ucMemFileSystemData;
+	// verify that the data saved in the memfile system is in the format that we expect...
+#define HEADERSIZE	4
+	unsigned char bOneByte;
+	unsigned char bMemFileFormat = 0x95;
+	memcpy(&bOneByte,uncompr+0,1);		//  get memfile format
+#ifdef DEBUG
+	if (debugflag ) dfprintf(fp9, "MemFile format = 0x%x\n",bOneByte);
+#endif
+	if ( bOneByte != bMemFileFormat ) {
+#ifdef DEBUG
+		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected format == 0x%x\n",bMemFileFormat);
+#endif
+		return(1);
+	}
+	unsigned char bShortIntSize;
+	memcpy(&bShortIntSize,uncompr+1,1);		//  get size of short int
+#ifdef DEBUG
+	if (debugflag ) dfprintf(fp9, "MemFile size of short int = 0x%x\n",bShortIntSize);
+#endif
+	if ( bShortIntSize != sizeof(short unsigned int) ) {
+#ifdef DEBUG
+		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected short int size == 0x%x\n",sizeof(short unsigned int));
+#endif
+		return(1);
+	}
+	unsigned char bIntSize;
+	memcpy(&bIntSize,uncompr+2,1);		//  get size of short int
+#ifdef DEBUG
+	if (debugflag ) dfprintf(fp9, "MemFile size of int       = 0x%x\n",bIntSize);
+#endif
+	if ( bIntSize != sizeof(unsigned int) ) {
+#ifdef DEBUG
+		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected int size == 0x%x\n",sizeof(unsigned int));
+#endif
+		return(1);
+	}
+	unsigned char bLongIntSize;
+	memcpy(&bLongIntSize,uncompr+3,1);		//  get size of short int
+#ifdef DEBUG
+	if (debugflag ) dfprintf(fp9, "MemFile size of long int  = 0x%x\n",bLongIntSize);
+#endif
+	if ( bLongIntSize != sizeof(long unsigned int) ) {
+#ifdef DEBUG
+		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected long int size == 0x%x\n",sizeof(long unsigned int));
+#endif
+		return(1);
+	}
 
-	memcpy(&DirOffset,uncompr,sizeof(long unsigned int));
-	memcpy(&DirSize,uncompr+sizeof(long unsigned int),sizeof(short unsigned int));
+	memcpy(&DirOffset,uncompr+HEADERSIZE,sizeof(long unsigned int));		// get the offest to the directory data
+	memcpy(&DirSize,uncompr+sizeof(long unsigned int)+HEADERSIZE,sizeof(short unsigned int));	// get the size of the directory
 #ifdef DEBUG
 	if ( strcmp("tutorDB.txt",szFileName) == 0 ) {
 //		int ijkTemp = TUTORUNCOMPFILESIZE+TUTORUNCOMPINDEXSIZE+sizeof(long unsigned int)+sizeof(short unsigned int);

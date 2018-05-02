@@ -29,7 +29,7 @@ int CloseMemFileSystem() {
 	}
 
 	long unsigned int lujkTemp = TotalMemFileSystemSize;
-	memcpy(uncomprMemFileSystem,&lujkTemp,sizeof(long unsigned int)); // copy the offset to the directory to the biginning or the memory array
+	memcpy(uncomprMemFileSystem+4,&lujkTemp,sizeof(long unsigned int)); // copy the offset to the directory to the biginning or the memory array (plus 4 bytes for the memfile format info)
 	memcpy(uncomprMemFileSystem+TotalMemFileSystemSize,Directory,sizeof(DIRREC2)*iFileNumber);  // copy the directory to the end of the memory array
 	TotalMemFileSystemSize += sizeof(DIRREC2)*iFileNumber;
 

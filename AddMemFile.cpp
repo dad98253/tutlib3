@@ -103,7 +103,7 @@ int AddMemFile(Byte * lpMemfile, int iFileSize, char * szFileName, int iOption) 
 		iFileNumber++;
 		short unsigned int DSize;
 		DSize = (short unsigned int)iFileNumber;
-		memcpy(uncomprMemFileSystem+sizeof(long unsigned int),&DSize,sizeof(short unsigned int));
+		memcpy(uncomprMemFileSystem+sizeof(long unsigned int)+4,&DSize,sizeof(short unsigned int));
 		return(iFileNumber-1);
 	}
 
