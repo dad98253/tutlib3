@@ -64,7 +64,7 @@ int LoadMemFile2(const char * szFileName, Byte ** lpMemFile, short unsigned int 
 	if ( strcmp("tutorDB.txt",szFileName) == 0 ) {
 //		int ijkTemp = TUTORUNCOMPFILESIZE+TUTORUNCOMPINDEXSIZE+sizeof(long unsigned int)+sizeof(short unsigned int);
 //		if (debugflag ) dfprintf(fp9,"in LoadMemFile, found \"%s\", DirSize = %u, DirOffset = %u, expected directory offset = %i\n",szFileName,DirSize,DirOffset,ijkTemp);
-		if (debugflag ) dfprintf(fp9,"in LoadMemFile2, found \"%s\", DirSize = %u, DirOffset = %u\n",szFileName,DirSize,DirOffset);
+		if (debugflag ) dfprintf(fp9,"in LoadMemFile2, looking for \"%s\", DirSize = %u, DirOffset = %u\n",szFileName,DirSize,DirOffset);
 	} else {
 		if (debugflag ) dfprintf(fp9,"in LoadMemFile2, DirSize = %u, DirOffset = %u, szFileName = \"%s\"\n",DirSize,DirOffset,szFileName);
 	}
