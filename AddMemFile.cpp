@@ -101,6 +101,9 @@ int AddMemFile(Byte * lpMemfile, int iFileSize, char * szFileName, int iOption) 
 		if (debugflag ) dfprintf(fp9,"TotalMemFileSystemSize is now %u\n",TotalMemFileSystemSize);
 #endif
 		iFileNumber++;
+		short unsigned int DSize;
+		DSize = (short unsigned int)iFileNumber;
+		memcpy(uncomprMemFileSystem+sizeof(long unsigned int),&DSize,sizeof(short unsigned int));
 		return(iFileNumber-1);
 	}
 
