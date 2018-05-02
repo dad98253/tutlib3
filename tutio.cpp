@@ -172,7 +172,7 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 #endif
 	if ( !bGenMemFileSource ) uncomprMemFileSystem = ucMemFileSystemData;		// if we didn't just finished generating the
 																				// memory file system, use the old data that
-																				// previously compile in																				
+																				// was previously compile in
 	if ( LoadMemFile2("tutorDB.txt", &lpTutMemFile, &FileSize ) != 0 ) {		// extract tutor the file
 #ifdef DEBUG
 		dfprintf(fp9, "LoadMemFile2 failed in \"tutorDB.txt\"\n");
