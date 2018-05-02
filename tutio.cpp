@@ -52,6 +52,11 @@ extern void DumpSymbols(char * where);
 #ifdef GENMEMFILE
 int GenMemFile (short unsigned int * FileSize,int * iTutMemFileSize,bool bGenMemFileSource);
 #endif
+#ifdef OLDMEMFILEFORMAT
+int iMemFileFormat = 0;
+#else	// DOMYTUTIO
+int iMemFileFormat = 1;
+#endif	// DOMYTUTIO
 
 int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , char * szTutDebugFilenameParm , char * szTutdbFilenameParm
 		, char * szTutdbDAFilenameParm, char * szTutdbINDFilenameParm) {
@@ -297,6 +302,7 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 
 	Byte * lpMemDir;
 	int NumCompressedRecords = 0;
+	if ( iMemFileFormat == 0 ) {
 // read the ascii "fort.1" tutor database file, process it and create the tutIndex.h and tutSource.61 files
     if ( ( NumCompressedRecords = tutCompressAndIndexTutdb() ) < 0) {
     	printf("error in tutCompressAndIndexTutdb\n");
@@ -313,6 +319,7 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 // load the memory file system directory
 // NOTE: this will be the file system presently saved in tutSource.h and tutIndex.h files located in
 // your build directory, NOT the files created by tutCompressAndIndexTutdb above!
+
     if ( LoadMemDir(&lpMemDir) < 0) {
     	printf("error in LoadMemDir\n");
     }
@@ -341,10 +348,11 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 	if (debugflag ) dfprintf(fp9,"UnloadMemDir done\n");
 #endif
 
+	}	//////////			end of if on iMemFileFormat
 
 
 
-    // test mem file system
+    // load mem file system (format 1)
 	// initialize the system for building
     int iDirSize = initMemFileSystem(30000, 10);
 #ifdef DEBUG
@@ -414,7 +422,6 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 #ifdef DEBUG
 	if (debugflag ) dfprintf(fp9,"mem file system directory created and saved\n");
 #endif
-
 
 	if( bGenMemFileSource ) {
 		CreateMemFileSource();	// produce new source code for the mem file system
