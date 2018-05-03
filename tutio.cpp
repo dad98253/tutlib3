@@ -194,7 +194,7 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 // print some debug infor about the tty device
 		struct stat sb;
 #ifdef WINDOZE
-		char * sztty=(char *)"passwin.exe";
+		char * sztty=(char *)"passwin3.exe";
 #else	// WINDOZE
 		char * sztty=(char *)"/dev/tty";
 #endif	// WINDOZE
