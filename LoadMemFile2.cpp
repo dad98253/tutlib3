@@ -69,7 +69,7 @@ int LoadMemFile2(const char * szFileName, Byte ** lpMemFile, short unsigned int 
 #ifdef DEBUG
 		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected format == 0x%x\n",bMemFileFormat);
 #endif
-		return(1);
+		return(-21);
 	}
 	unsigned char bShortIntSize;
 	memcpy(&bShortIntSize,uncompr+1,1);		//  get size of short int
@@ -80,7 +80,7 @@ int LoadMemFile2(const char * szFileName, Byte ** lpMemFile, short unsigned int 
 #ifdef DEBUG
 		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected short int size == 0x%x\n",sizeof(short unsigned int));
 #endif
-		return(1);
+		return(-22);
 	}
 	unsigned char bIntSize;
 	memcpy(&bIntSize,uncompr+2,1);		//  get size of short int
@@ -91,7 +91,7 @@ int LoadMemFile2(const char * szFileName, Byte ** lpMemFile, short unsigned int 
 #ifdef DEBUG
 		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected int size == 0x%x\n",sizeof(unsigned int));
 #endif
-		return(1);
+		return(-23);
 	}
 	unsigned char bLongIntSize;
 	memcpy(&bLongIntSize,uncompr+3,1);		//  get size of short int
@@ -102,7 +102,7 @@ int LoadMemFile2(const char * szFileName, Byte ** lpMemFile, short unsigned int 
 #ifdef DEBUG
 		if (debugflag ) dfprintf(fp9, "MemFile format is incomatible! Expected long int size == 0x%x\n",sizeof(long unsigned int));
 #endif
-		return(1);
+		return(-24);
 	}
 
 	memcpy(&DirOffset,uncompr+HEADERSIZE,sizeof(long unsigned int));		// get the offest to the directory data
