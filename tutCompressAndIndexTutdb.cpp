@@ -75,7 +75,7 @@ int tutCompressAndIndexTutdb() {
 		return(-7);
 	}
 #ifdef DEBUG
-	if (getflag(TUTCOMPRESSANDINDEXDBG)) dfprintf(fp9,"in tutCompressAndIndexTutdb, initial value of uncomprLen = %lu\n",uncomprLen);
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"in tutCompressAndIndexTutdb, initial value of uncomprLen = %lu\n",uncomprLen);
 #endif
 // uncomprLen is initially set to a big number (BUFFERSIZE is set in tutlib03.h).
 // NOTE : You will need to set BUFFERSIZE big enough to hold all of the fDBFile file! So, if the 
@@ -93,7 +93,7 @@ int tutCompressAndIndexTutdb() {
 
 	// start of tutor file data... set directory data
 #ifdef DEBUG
-	if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"file offset to start of tutor file = %u\n",TotalFileSize);
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"file offset to start of tutor file = %u\n",TotalFileSize);
 #endif
 	(Directory+iFileNumber)->FileOffset = TotalFileSize;				// we will build the directory Directory struct.. Save the offset to the first entry
 	(Directory+iFileNumber)->wNamelength = (short unsigned int)strlen(FileNameList[iFileNumber]);	// "tutorDB.txt" is already in the FileNameList
@@ -105,7 +105,7 @@ int tutCompressAndIndexTutdb() {
 	TutorIndexOffset = (short unsigned int*)(uncompr+TotalFileSize);	// save a pointer to the first word in the file for the record index offset, this will be saved later
 	TotalFileSize += sizeof(short unsigned int);		// save space for offset to the record index (note that this offset is relative to the start of the tutor file
 #ifdef DEBUG
-	if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"the actual start of the tutor data records is at %u (should be %u)\n",TotalFileSize-iInitailFileOffset,sizeof(short unsigned int));
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"the actual start of the tutor data records is at %u (should be %u)\n",TotalFileSize-iInitailFileOffset,sizeof(short unsigned int));
 #endif
 	while(1) {
 		if( ( iNumCharsRead = inputl(fDBFile, buf, BUFFERSIZE) ) < 0 ) break;	// read one line of the tutorial database file from disk until we hit end of file
@@ -124,13 +124,13 @@ int tutCompressAndIndexTutdb() {
 			iRecNumber++;
 			fprintf(fSeqFile,"%s\n",buf+iFirstChar(buf+6)+6);			// write it out to the sequential file (used for debug only now days...)
 #ifdef DEBUG
-			if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"*WGID %s (rec #%i) found at offset %u\n",szGID,iRecNumber-1,TotalFileSize-iInitailFileOffset);
+			dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"*WGID %s (rec #%i) found at offset %u\n",szGID,iRecNumber-1,TotalFileSize-iInitailFileOffset);
 #endif
 			continue;													// done with WGID data
 		}
 		if ( strncmp (buf+1,"*WEOR",(size_t)5) == 0 ) {					// found a *WEOR identifier
 #ifdef DEBUG
-			if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"*WEOR found at offset %u\n",TotalFileSize-iInitailFileOffset);
+			dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"*WEOR found at offset %u\n",TotalFileSize-iInitailFileOffset);
 #endif
 //			if(strlen(buf)>1){
 //				int iNumCharWrite = sprintf((char *)(uncompr+TotalFileSize),"%s\n",szEOR);
@@ -142,7 +142,7 @@ int tutCompressAndIndexTutdb() {
 			iTotRecSize++;					// iTotRecSize is the size of the display point record
 			index.wUncompressedsize = iTotRecSize;	// save the size of the record in the index struct (fyi, INDEXREC is defined in tutlib01.h)
 #ifdef DEBUG
-			if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"[tutComp...]iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
+			dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"[tutComp...]iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
 #endif
 			iTotRecSize = 0;				// get ready for next record
 			memcpy(cIndexFile+TotalIndexSize, &index, sizeof(index) );		// copy the index struct to the cIndexFile temp memory file
@@ -188,7 +188,7 @@ int tutCompressAndIndexTutdb() {
 		iTotRecSize++;
 		index.wUncompressedsize = iTotRecSize;
 #ifdef DEBUG
-		if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"last record saved... iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
+		dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"last record saved... iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
 #endif
 		iTotRecSize = 0;
 		memcpy(cIndexFile+TotalIndexSize, &index, sizeof(index) );
@@ -208,8 +208,8 @@ int tutCompressAndIndexTutdb() {
 	//	 char *FileNameList[DIRSIZE];
 	*TutorIndexOffset = (short unsigned int)(TotalFileSize-iInitailFileOffset);
 #ifdef DEBUG
-	if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"TotalFileSize = %lu, TotalIndexSize = %lu, iRecNumber = %i\n",TotalFileSize-iInitailFileOffset,TotalIndexSize,iRecNumber);
-	if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"calculated  TutorIndexOffset = %u\n",*TutorIndexOffset);
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"TotalFileSize = %lu, TotalIndexSize = %lu, iRecNumber = %i\n",TotalFileSize-iInitailFileOffset,TotalIndexSize,iRecNumber);
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"calculated  TutorIndexOffset = %u\n",*TutorIndexOffset);
 #endif
 
 	memcpy(uncompr+TotalFileSize,&iRecNumber,sizeof(iRecNumber));		// tack the number of records onto the memory file
@@ -218,7 +218,7 @@ int tutCompressAndIndexTutdb() {
 	uncomprLen = TotalFileSize + TotalIndexSize;		// calculate the size of the file. uncomprLen will eventually be passed to the compression routine
 	(Directory+iFileNumber)->wFileSize = (unsigned short)(uncomprLen - iInitailFileOffset);
 #ifdef DEBUG
-	if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"file #%i file size = %u\n",iFileNumber,(Directory+iFileNumber)->wFileSize);
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"file #%i file size = %u\n",iFileNumber,(Directory+iFileNumber)->wFileSize);
 #endif
 	iFileNumber++;		// increment the number of files in the directory
 	/// if adding other files, do it here...
@@ -237,7 +237,7 @@ int tutCompressAndIndexTutdb() {
 		uncomprLen += strlen(FileNameList[ijck])+1;				// bump the next available name location
 	}
 #ifdef DEBUG
-			if (getflag(TUTCOMPRESSANDINDEXDBG) ) dfprintf(fp9,"expected uncomprLen = %u\n",uncomprLen);
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"expected uncomprLen = %u\n",uncomprLen);
 #endif
 	comprLen = uncomprLen + 1000;  // add a little extra just in case the array doesn't shrink properly (possible for very small and/or uncompressable files)
     compr    = (Byte*)calloc((uInt)comprLen, 1);		// allocate space for the compressed array
@@ -285,10 +285,8 @@ int tutCompressAndIndexTutdb() {
 	 CHECK_ERR(err, "uncompress");
 
 #ifdef DEBUG
-	if (getflag(TUTCOMPRESSANDINDEXDBG) ) {
-		dfprintf(fp9,"uncomprLen after uncompress call = %lu\n",uncomprLen);
-		dfprintf(fp9,"comprLen = %lu, compresion ratio = %f\n",comprLen,(float)comprLen/(float)uncomprLen);
-	}
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"uncomprLen after uncompress call = %lu\n",uncomprLen);
+	dfprintf(__LINE__,__FILE__,TUTCOMPRESSANDINDEXDBG,"comprLen = %lu, compresion ratio = %f\n",comprLen,(float)comprLen/(float)uncomprLen);
 #endif
 // tack some more stuff onto the end of the tutIndex.h file. it can be used to check the uncompressed array at runtime
 	fprintf(fIncludeFile, "#define %s \t\t%lu\n","TUTORUNCOMPFILESIZE",TotalFileSize-sizeof(long unsigned int)-sizeof(short unsigned int));

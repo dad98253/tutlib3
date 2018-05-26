@@ -15,7 +15,7 @@ int tutDisplayWorker ( int iDisplayPointID, int iCallerID, int NumReplacements ,
 //	va_start(ap, NumReplacements);
 
 #ifdef DEBUG
-	if (debugflag) dfprintf(fp9,"tutDisplayWorker called with iCallerID = %i\n",iCallerID);
+	dfprintf(__LINE__,__FILE__,TRACE,"tutDisplayWorker called with iCallerID = %i\n",iCallerID);
 #endif
 
     int iRet = tutDisplayWorkerL2 (iDisplayPointID , iCallerID , NumReplacements , ap );

@@ -13,7 +13,7 @@ int tutDisplayTextPrompt ( int iDisplayPointID , int NumReplacements , ...  ) {
     va_start(ap, NumReplacements);
 
 #ifdef DEBUG
-	if (debugflag) dfprintf(fp9,"tutDisplayTextPromptx2 called for \"%i\"\n",iDisplayPointID);
+	dfprintf(__LINE__,__FILE__,TRACE,"tutDisplayTextPromptx2 called for \"%i\"\n",iDisplayPointID);
 #endif
 
     int iRet = tutDisplayWorker ( iDisplayPointID , DISPLAYTEXTPROMPT , NumReplacements , ap );
@@ -21,7 +21,7 @@ int tutDisplayTextPrompt ( int iDisplayPointID , int NumReplacements , ...  ) {
 
 	if ( sztutNextLine == NULL ) {
 #ifdef DEBUG
-		if (debugflag ) dfprintf(fp9,"sztutNextLine not defined in tutDisplayTextPromptx2 at line %i, iRet = %i\n",__LINE__,iRet);
+		dfprintf(__LINE__,__FILE__,TRACE,"sztutNextLine not defined in tutDisplayTextPromptx2 at line %i, iRet = %i\n",__LINE__,iRet);
 #endif
 		return(RET_ABORTPROGRAM);
 	}

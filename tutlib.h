@@ -84,20 +84,6 @@ extern int MsgBox(const char * message, ...);
 #include "tutIndex.h"
 
 
-#ifndef TUTLIBDFPRINTF_H_
-#define TUTLIBDFPRINTF_H_
-
-#ifdef DEBUG
-		extern FILE *fp9;
-		extern int debugflag;
-		extern int FAR cdecl WinFprintf(FILE *hp, const char * fmt,...);
-        #define dfprintf if (debugflag) WinFprintf
-#else
-        #define dfprintf if (0) ((int (*)(const char *, ...)) 0)
-#endif
-
-#endif   //  TUTLIBDFPRINTF_H_
-
 EXTERN int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , char * szTutDebugFilenameParm , char * szTutdbFilenameParm
 		, char * szTutdbDAFilenameParm, char * szTutdbINDFilenameParm);
 
@@ -191,6 +177,13 @@ EXTERN long unsigned int TotalMemFileSystemSize INITIZERO;
 #define DISPLAYPROMPT	1
 #define DISPLAYTEXTPROMPT	2
 #define DISPLAYRECURSIVEPROMPT	3
+
+
+// define tutlib3 debug flags
+
+#ifndef FROM_DEBUGLIB2
+#include "debug.h"
+#endif
 
 #ifndef __MYFILE__
 #ifdef WINDOZE

@@ -26,7 +26,7 @@ bool tutProcessInput( TUTSTATUSDATA *lpTStatus, DPINFO *DPInfo, char * szDefault
 //		}
 //	}
 #ifdef DEBUG
-	if (debugflag) dfprintf(fp9,"sztutNextLine = %s\n",sztutNextLine);
+	dfprintf(__LINE__,__FILE__,TRACE,"sztutNextLine = %s\n",sztutNextLine);
 #endif
 	//	struct DPINFO {
 	//		bool bVariableNumberOfFields = false;		// true => V, false => F
@@ -55,37 +55,35 @@ bool tutProcessInput( TUTSTATUSDATA *lpTStatus, DPINFO *DPInfo, char * szDefault
 		strcpy(sztutNextLine,szDefaultInput);
 		LengthOfInputLine = strlen(sztutNextLine);
 #ifdef DEBUG
-		if (debugflag) dfprintf(fp9,"using default input at line %i in tutProcessInput\n",__LINE__);
+		dfprintf(__LINE__,__FILE__,TRACE,"using default input at line %i in tutProcessInput\n",__LINE__);
 #endif
 	}
 	int nParse = 0;
 #ifdef DEBUG
-	if (debugflag) dfprintf(fp9,"in tutProcessInput sztutNextLine=%s\n",sztutNextLine);
+	dfprintf(__LINE__,__FILE__,TRACE,"in tutProcessInput sztutNextLine=%s\n",sztutNextLine);
 #endif
 #ifdef DEBUG
-	if (debugflag) dfprintf(fp9,"init nParse = %i\n",nParse);
+	dfprintf(__LINE__,__FILE__,TRACE,"init nParse = %i\n",nParse);
 #endif
 	if ( iCallerID != DISPLAYTEXTPROMPT ) {
 		if ((nParse=ParseLineRC(sztutNextLine))<0) {
 #ifdef DEBUG
-	if (debugflag) dfprintf(fp9,"nParse returned from ParseLineRC = %i\n",nParse);
+	dfprintf(__LINE__,__FILE__,TRACE,"nParse returned from ParseLineRC = %i\n",nParse);
 #endif
 			return (false);
 		}
 #ifdef DEBUG
-		if (debugflag) {
-			dfprintf(fp9,"found %i items\n",nParse);
-			int i;
-			const char *szformat[] = {"unknown0","char","int","string","unknown4","unknown5","unknown6","unknown7"};
-			for (i=0;i<nParse;i++){
-				dfprintf(fp9,"item[%i] (fmt %i (%s)) = \"%s\"\n",i,ParseLineRCfmtItem[i],szformat[ParseLineRCfmtItem[i]],ParseLineRCItems[i]);
-			}
-			dfprintf(fp9,"%i fields(fmt) = ",nParse);
-			for (i=0;i<nParse;i++){
-				dfprintf(fp9,"%s(%i); ",ParseLineRCItems[i],ParseLineRCfmtItem[i]);
-			}
-			dfprintf(fp9,"\n");
+		dfprintf(__LINE__,__FILE__,TRACE,"found %i items\n",nParse);
+		int i;
+		const char *szformat[] = {"unknown0","char","int","string","unknown4","unknown5","unknown6","unknown7"};
+		for (i=0;i<nParse;i++){
+			dfprintf(__LINE__,__FILE__,TRACE,"item[%i] (fmt %i (%s)) = \"%s\"\n",i,ParseLineRCfmtItem[i],szformat[ParseLineRCfmtItem[i]],ParseLineRCItems[i]);
 		}
+		dfprintf(__LINE__,__FILE__,TRACE,"%i fields(fmt) = ",nParse);
+		for (i=0;i<nParse;i++){
+			dfprintf(__LINE__,__FILE__,TRACE,"%s(%i); ",ParseLineRCItems[i],ParseLineRCfmtItem[i]);
+		}
+		dfprintf(__LINE__,__FILE__,TRACE,"\n");
 #endif
 		char *szTypeField;
 		szTypeField = (char *)"alphanumeric word(s)";

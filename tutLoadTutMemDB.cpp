@@ -24,7 +24,7 @@ int tutLoadTutMemDB(Byte ** lpTutMemFile){
     }
     /*
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"zlib version %s = 0x%04x, compile flags = 0x%lx\n",ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
+	dfprintf(__LINE__,__FILE__,TRACE,"zlib version %s = 0x%04x, compile flags = 0x%lx\n",ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
 #endif
 
 	Byte *uncompr;
@@ -36,7 +36,7 @@ int tutLoadTutMemDB(Byte ** lpTutMemFile){
 	if ( uncompr == NULL ) {
 		fprintf(stderr, "calloc failed in tutLoadTutMemDB... out of memory!\n");
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"calloc(%u,%i) failed in tutLoadTutMemDB\n",(uInt)uncomprLen,1);
+	dfprintf(__LINE__,__FILE__,TRACE,"calloc(%u,%i) failed in tutLoadTutMemDB\n",(uInt)uncomprLen,1);
 #endif
 		return(2);
 	}
@@ -45,7 +45,7 @@ int tutLoadTutMemDB(Byte ** lpTutMemFile){
 	CHECK_ERR(err, "uncompress");
 
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"uncompressed file size is %u\n",uncomprLen);
+	dfprintf(__LINE__,__FILE__,TRACE,"uncompressed file size is %u\n",uncomprLen);
 #endif
 
 	DIRREC *Dir;
@@ -62,14 +62,14 @@ int tutLoadTutMemDB(Byte ** lpTutMemFile){
 	memcpy(&DirSize,uncompr+sizeof(long unsigned int),sizeof(short unsigned int));
 #ifdef DEBUG
 	int ijkTemp = TUTORUNCOMPFILESIZE+TUTORUNCOMPINDEXSIZE+sizeof(long unsigned int)+sizeof(short unsigned int);
-	if (debugflag ) dfprintf(fp9,"in tutLoadTutMemDB, DirSize = %u, DirOffset = %u, expected offset = %i\n",DirSize,DirOffset,ijkTemp);
-//	if (debugflag ) dfprintf(fp9,"in tutLoadTutMemDB, DirSize = , DirOffset = %ul, expected offset = %i\n",DirOffset,ijkTemp);
+	dfprintf(__LINE__,__FILE__,TRACE,"in tutLoadTutMemDB, DirSize = %u, DirOffset = %u, expected offset = %i\n",DirSize,DirOffset,ijkTemp);
+//	dfprintf(__LINE__,__FILE__,TRACE,"in tutLoadTutMemDB, DirSize = , DirOffset = %ul, expected offset = %i\n",DirOffset,ijkTemp);
 #endif
 
 	Dir = (DIRREC *)(uncompr+DirOffset);
 	if(strncmp("tutorDB.txt",(const char *)(uncompr+Dir->NameOffset),Dir->wNamelength) == 0 ){
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"found \"%s\", file size = %u, file offset = %u\n",(const char *)(uncompr+Dir->NameOffset),Dir->wFileSize,Dir->FileOffset);
+	dfprintf(__LINE__,__FILE__,TRACE,"found \"%s\", file size = %u, file offset = %u\n",(const char *)(uncompr+Dir->NameOffset),Dir->wFileSize,Dir->FileOffset);
 #endif
 	}
 

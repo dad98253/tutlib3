@@ -13,7 +13,7 @@ int CloseMemFileSystem() {
 	DIRREC2 * DirEntry;
 
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"calling CloseMemFileSystem\n");
+	dfprintf(__LINE__,__FILE__,TRACE,"calling CloseMemFileSystem\n");
 #endif
 	int ijck;
 	int iSizeOfAllNames = 0;
@@ -23,7 +23,7 @@ int CloseMemFileSystem() {
 	}
 	if ( (TotalMemFileSystemSize+sizeof(DIRREC2)*iFileNumber+iSizeOfAllNames) > uncomprMemFileSystemLen ) {
 #ifdef DEBUG
-		if (debugflag ) dfprintf(fp9,"memFile is full... unable to add directory, TotalMemFileSystemSize = %u, size needed = %u\n",TotalMemFileSystemSize,TotalMemFileSystemSize+sizeof(DIRREC2)*iFileNumber+iSizeOfAllNames);
+		dfprintf(__LINE__,__FILE__,TRACE,"memFile is full... unable to add directory, TotalMemFileSystemSize = %u, size needed = %u\n",TotalMemFileSystemSize,TotalMemFileSystemSize+sizeof(DIRREC2)*iFileNumber+iSizeOfAllNames);
 #endif
 		return(-20);
 	}
@@ -42,7 +42,7 @@ int CloseMemFileSystem() {
 		FileNameList[ijck] = NULL;
 	}
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"resultant size of Mem File System is = %u\n",TotalMemFileSystemSize);
+	dfprintf(__LINE__,__FILE__,TRACE,"resultant size of Mem File System is = %u\n",TotalMemFileSystemSize);
 #endif
 
 	free(FileNameList);

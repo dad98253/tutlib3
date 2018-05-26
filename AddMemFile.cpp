@@ -15,7 +15,7 @@
 int AddMemFile(Byte * lpMemfile, int iFileSize, char * szFileName, int iOption) {
 
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"in AddMemFile, szFileName = %s, iFileSize = %i, iOption = %i\n",szFileName,iFileSize,iOption);
+	dfprintf(__LINE__,__FILE__,TRACE,"in AddMemFile, szFileName = %s, iFileSize = %i, iOption = %i\n",szFileName,iFileSize,iOption);
 #endif
 
 	int err;
@@ -32,7 +32,7 @@ int AddMemFile(Byte * lpMemfile, int iFileSize, char * szFileName, int iOption) 
 	int i;
 	for (i=0;i<iFileNumber;i++) {
 #ifdef DEBUG
-		if (debugflag ) dfprintf(fp9,"in AddMemFile, FileNameList[%i] = \"%s\", szFileName = \"%s\"\n",i,FileNameList[i],szFileName);
+		dfprintf(__LINE__,__FILE__,TRACE,"in AddMemFile, FileNameList[%i] = \"%s\", szFileName = \"%s\"\n",i,FileNameList[i],szFileName);
 #endif
 		if ( strcmp(FileNameList[i],szFileName) == 0 ) return (-4);
 	}
@@ -43,7 +43,7 @@ int AddMemFile(Byte * lpMemfile, int iFileSize, char * szFileName, int iOption) 
 	FileNameList[iFileNumber] = szTempName;		// save the file name in the temprary filelist
 
 #ifdef DEBUG
-	if (debugflag ) dfprintf(fp9,"in AddMemFile, offset for %s = %u bytes\n",szFileName,TotalMemFileSystemSize);
+	dfprintf(__LINE__,__FILE__,TRACE,"in AddMemFile, offset for %s = %u bytes\n",szFileName,TotalMemFileSystemSize);
 #endif
 
 	// start of file data... set directory data
@@ -74,7 +74,7 @@ int AddMemFile(Byte * lpMemfile, int iFileSize, char * szFileName, int iOption) 
 
 		if ( (TotalMemFileSystemSize+comprLen) > uncomprMemFileSystemLen ) {
 #ifdef DEBUG
-			if (debugflag ) dfprintf(fp9,"memFile is full... compressed file size = %u, TotalMemFileSystemSize = %u, uncomprMemFileSystemLen = %u\n",comprLen,TotalMemFileSystemSize,uncomprMemFileSystemLen);
+			dfprintf(__LINE__,__FILE__,TRACE,"memFile is full... compressed file size = %u, TotalMemFileSystemSize = %u, uncomprMemFileSystemLen = %u\n",comprLen,TotalMemFileSystemSize,uncomprMemFileSystemLen);
 #endif
 			return(-20);
 		}
@@ -82,23 +82,23 @@ int AddMemFile(Byte * lpMemfile, int iFileSize, char * szFileName, int iOption) 
 		TotalMemFileSystemSize += comprLen;
 		free(compr);
 #ifdef DEBUG
-		if (debugflag ) dfprintf(fp9,"compressed file size = %u, file saved as directory entry number %i\n",comprLen,iFileNumber);
+		dfprintf(__LINE__,__FILE__,TRACE,"compressed file size = %u, file saved as directory entry number %i\n",comprLen,iFileNumber);
 #endif
 	} else {
 		if ( (TotalMemFileSystemSize+iFileSize) > uncomprMemFileSystemLen ) {
 #ifdef DEBUG
-			if (debugflag ) dfprintf(fp9,"memFile is full... file size = %i, TotalMemFileSystemSize = %u, uncomprMemFileSystemLen = %u\n",iFileSize,TotalMemFileSystemSize,uncomprMemFileSystemLen);
+			dfprintf(__LINE__,__FILE__,TRACE,"memFile is full... file size = %i, TotalMemFileSystemSize = %u, uncomprMemFileSystemLen = %u\n",iFileSize,TotalMemFileSystemSize,uncomprMemFileSystemLen);
 #endif
 			return(-20);
 		}
 		memcpy(uncomprMemFileSystem+TotalMemFileSystemSize,lpMemfile,iFileSize);   //  save the file
 		TotalMemFileSystemSize += iFileSize;
 #ifdef DEBUG
-		if (debugflag ) dfprintf(fp9,"file saved as directory entry number %i\n",iFileNumber);
+		dfprintf(__LINE__,__FILE__,TRACE,"file saved as directory entry number %i\n",iFileNumber);
 #endif
 	}
 #ifdef DEBUG
-		if (debugflag ) dfprintf(fp9,"TotalMemFileSystemSize is now %u\n",TotalMemFileSystemSize);
+		dfprintf(__LINE__,__FILE__,TRACE,"TotalMemFileSystemSize is now %u\n",TotalMemFileSystemSize);
 #endif
 		iFileNumber++;
 		short unsigned int DSize;

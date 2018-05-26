@@ -11,7 +11,7 @@ int tutDisplayPrompt (int iDisplayPointID, int NumReplacements, ...) {
 	va_list ap;
 	va_start(ap, NumReplacements);
 #ifdef DEBUG
-	if (debugflag) dfprintf(fp9,"tutDisplayPromptx2 called for \"%i\"\n",iDisplayPointID);
+	dfprintf(__LINE__,__FILE__,TRACE,"tutDisplayPromptx2 called for \"%i\"\n",iDisplayPointID);
 #endif
     int iRet = tutDisplayWorker (iDisplayPointID , DISPLAYPROMPT , NumReplacements , ap );
 	va_end(ap);

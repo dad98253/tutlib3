@@ -25,7 +25,7 @@ int tutPrompt( TUTSTATUSDATA *lpTStatus, char * szDPIDString,char *szDefaultInpu
 		}
 	}
 #ifdef DEBUG
-		if ( debugflag && strlen(szDPIDString) != 0 && bOutputDP ) dfprintf(fp9," %s",szDPIDString);
+		if ( strlen(szDPIDString) != 0 && bOutputDP ) dfprintf(__LINE__,__FILE__,TRACE," %s",szDPIDString);
 #endif
 // if stdin is a tty and the type-ahead buffer is empty, display the display point ID - note no CR, first line of DP finishes the line
 	if( strlen(szDPText) != 0 && bOutputDP) {
@@ -36,7 +36,7 @@ int tutPrompt( TUTSTATUSDATA *lpTStatus, char * szDPIDString,char *szDefaultInpu
 		}
 	}
 #ifdef DEBUG
-		if ( debugflag && strlen(szDPText) != 0 && bOutputDP ) dfprintf(fp9,"%s",szDPText);
+		if ( strlen(szDPText) != 0 && bOutputDP ) dfprintf(__LINE__,__FILE__,TRACE,"%s",szDPText);
 #endif
 
 // if stdin is a tty and the type-ahead buffer is empty, print a prompt
@@ -48,7 +48,7 @@ int tutPrompt( TUTSTATUSDATA *lpTStatus, char * szDPIDString,char *szDefaultInpu
 				return (iNumBytesOutput);
 			}
 #ifdef DEBUG
-			if (debugflag) dfprintf(fp9," ::\n");
+			dfprintf(__LINE__,__FILE__,TRACE," ::\n");
 #endif
 		} else {
 			if ( szDefaultInput[0] == '\000' ) {
@@ -58,7 +58,7 @@ int tutPrompt( TUTSTATUSDATA *lpTStatus, char * szDPIDString,char *szDefaultInpu
 					return (iNumBytesOutput);
 				}
 #ifdef DEBUG
-				if (debugflag) dfprintf(fp9," ::\n");
+				dfprintf(__LINE__,__FILE__,TRACE," ::\n");
 #endif
 			} else {
 				iNumBytesOutput = fprintf(stdout," (%s)::\n",szDefaultInput);
@@ -67,7 +67,7 @@ int tutPrompt( TUTSTATUSDATA *lpTStatus, char * szDPIDString,char *szDefaultInpu
 					return (iNumBytesOutput);
 				}
 #ifdef DEBUG
-				if (debugflag) dfprintf(fp9," (%s)::\n",szDefaultInput);
+				dfprintf(__LINE__,__FILE__,TRACE," (%s)::\n",szDefaultInput);
 #endif
 			}
 		}
