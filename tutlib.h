@@ -86,6 +86,7 @@ extern int MsgBox(const char * message, ...);
 
 EXTERN int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , char * szTutDebugFilenameParm , char * szTutdbFilenameParm
 		, char * szTutdbDAFilenameParm, char * szTutdbINDFilenameParm);
+extern int tutIsTty();
 
 EXTERN int tutDisplayPrompt (const char * szDispPtName, int iNumArg, ...);
 EXTERN int tutDisplayTextPrompt (const char * szDispPtName, int iNumArg, ...);
@@ -147,7 +148,7 @@ EXTERN int LoadMemFile2(const char * szFileName, Byte ** lpMemFile, short unsign
 EXTERN void SetParseFmt(int fmt, int numdelim, ...);
 
 
-EXTERN bool bIsStdinTty INITBOOLFALSE;
+extern bool bIsStdinTty;	// defined in tutIsTty
 //extern void SetParseFmt(int fmt, int numdelim, ...);
 extern int * ParseLineRCfmtItem;
 extern char ** ParseLineRCItems;
@@ -156,7 +157,7 @@ extern int ParseLineRCNumItems;
 //extern int SetParseFmtNumDelims;
 //extern int SetParseFmtfmt;
 extern int LengthOfInputLine;
-EXTERN bool bOutputDP INITBOOLFALSE;
+extern bool bOutputDP;	// defined in tutIsTty
 EXTERN bool btutFirstPromtCall INITBOOLTRUE;
 EXTERN TUTSTATUSDATA *lpTStatus INITNULL;
 EXTERN char * sztutNextLine INITNULL;

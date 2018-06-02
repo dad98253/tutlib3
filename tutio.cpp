@@ -36,11 +36,7 @@ extern int DataFromTut[DATADIM];
 #define ITUTDB  7
 //extern "C" void UIOF( int KIN , int KOUT , int KOUTXX , int KTUTXX , int KTUTDB );
 //extern "C" void UREADBFF(  );
-#ifdef WINDOZE
-#ifndef TEXTMODEONLY
-extern BOOL bStdioRedirectedToConsole;
-#endif  // TEXTMODEONLY
-#endif  // WINDOZE
+
 
 #ifdef DEBUG
 extern void DumpSymbols(char * where);
@@ -128,26 +124,9 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 
 
 	// check if stdin is tty...
-#ifdef WINDOZE
-#ifndef TEXTMODEONLY
-	if ( bStdioRedirectedToConsole ) { bOutputDP = bIsStdinTty = true; } else { bOutputDP = bIsStdinTty = false; }
-#else  //  TEXTMODEONLY
-	if ( isatty(STDIN_FILENO) != 0 ) { bOutputDP = bIsStdinTty = true; } else { bOutputDP = bIsStdinTty = false; }
-#endif  //  TEXTMODEONLY
-#else  //  WINDOZE
-    if ( isatty(STDIN_FILENO) != 0 ) {
-//	if ( isatty(fileno(stdin)) != 0 ) {
-		bOutputDP = bIsStdinTty = true; }
-	else {
-		bOutputDP = bIsStdinTty = false; }
-#endif  //  WINDOZE
-#ifdef DEBUG
-		if (bIsStdinTty) {
-			dfprintf(__LINE__,__FILE__,TRACE,"stdin is a tty\n");
-		} else {
-			dfprintf(__LINE__,__FILE__,TRACE,"stdin is not a tty\n");
-		}
-#endif  // DEBUG
+	tutIsTty();
+
+
 
 	// initialize the parse parameters for ParseLineRC
 	SetParseFmt(0,0);
