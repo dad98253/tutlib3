@@ -5,6 +5,10 @@
  *      Author: dad
  */
 
+#ifndef WINDOZE
+#include <unistd.h>
+#endif	// WINDOZE
+
 #include "debug.h"
 
 
