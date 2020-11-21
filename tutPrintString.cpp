@@ -23,8 +23,8 @@ int tutPrintString (const char * szText){
 		}
 	}
 #ifdef DEBUG
-		if ( strlen(szText) == 0 || !bOutputDP ) dfprintf(__LINE__,__FILE__,TRACE,"tutPrintString called with bOutputDP = %u and string = \"%s\" (length %i)\n",bOutputDP,szText,strlen(szText));
-		if ( strlen(szText) != 0 &&  bOutputDP ) dfprintf(__LINE__,__FILE__,TRACE," %s\n",szText);
+		if ( strlen(szText) == 0 || !bOutputDP ) dfprintf2(__LINE__,__FILE__,TRACE,"tutPrintString called with bOutputDP = %u and string = \"%s\" (length %i)\n",bOutputDP,szText,strlen(szText));
+		if ( strlen(szText) != 0 &&  bOutputDP ) dfprintf2(__LINE__,__FILE__,TRACE," %s\n",szText);
 #endif
 
 	return(SUCCESS);

@@ -40,9 +40,9 @@ int tutIsTty() {
 #endif  //  WINDOZE
 #ifdef DEBUG
 		if (bIsStdinTty) {
-			dfprintf(__LINE__,__FILE__,TRACE,"stdin is a tty\n");
+			dfprintf2(__LINE__,__FILE__,TRACE,"stdin is a tty\n");
 		} else {
-			dfprintf(__LINE__,__FILE__,TRACE,"stdin is not a tty\n");
+			dfprintf2(__LINE__,__FILE__,TRACE,"stdin is not a tty\n");
 		}
 #endif  // DEBUG
 

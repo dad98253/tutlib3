@@ -32,7 +32,7 @@ int tutRecursiveInputInt (int iDispPtNameLong, int iDispPtNameShort, int* Data, 
 
 	if ( NumReplacements < 0 ) return (BADUDISPPCCALL);
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"tutRecursiveInputIntx2 called for %i\n",iDispPtNameLong);
+	dfprintf2(__LINE__,__FILE__,TRACE,"tutRecursiveInputIntx2 called for %i\n",iDispPtNameLong);
 #endif
 	*iNumData = 0;
 // prompt until we get valid data (10 times max)
@@ -55,14 +55,14 @@ int tutRecursiveInputInt (int iDispPtNameLong, int iDispPtNameShort, int* Data, 
 		if ( iRet < 0 ) return(RET_ABORTPROGRAM);
 		// read and check the input
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"tutRecursiveInputIntx2 found %i inputs\n",ParseLineRCNumItems);
+		dfprintf2(__LINE__,__FILE__,TRACE,"tutRecursiveInputIntx2 found %i inputs\n",ParseLineRCNumItems);
 		if ( tutFetchNumItems() > 0 ) {
 			for (int ijk = 1; ijk < (tutFetchNumItems()+1) ; ijk++) {
-				dfprintf(__LINE__,__FILE__,TRACE,"field %i (type %i) : ",ijk,tutFetchDataType(ijk));
+				dfprintf2(__LINE__,__FILE__,TRACE,"field %i (type %i) : ",ijk,tutFetchDataType(ijk));
 				if ( tutFetchDataType(ijk) < 2 ) {
-					dfprintf(__LINE__,__FILE__,TRACE,"%s\n",tutFetchTextData(ijk));
+					dfprintf2(__LINE__,__FILE__,TRACE,"%s\n",tutFetchTextData(ijk));
 				} else {
-					dfprintf(__LINE__,__FILE__,TRACE,"%i\n",(int)tutFetchDatax2(ijk));
+					dfprintf2(__LINE__,__FILE__,TRACE,"%i\n",(int)tutFetchDatax2(ijk));
 				}
 			}
 		}
@@ -108,7 +108,7 @@ int tutRecursiveInputInt (int iDispPtNameLong, int iDispPtNameShort, int* Data, 
 #ifdef DEBUG
 				int ifound = strspn(tutFetchTextData(i),"1234567890-");
 				int istrlen = strlen(tutFetchTextData(i));
-				dfprintf(__LINE__,__FILE__,TRACE,"in tutRecursiveInputIntx2 at line %i, ifound = %i, istrlen = %i\n",__LINE__,ifound,istrlen);
+				dfprintf2(__LINE__,__FILE__,TRACE,"in tutRecursiveInputIntx2 at line %i, ifound = %i, istrlen = %i\n",__LINE__,ifound,istrlen);
 #endif
 				if ( strspn(tutFetchTextData(i),"1234567890-") != strlen(tutFetchTextData(i)) ) {
 					MsgBox("the only characters allowed in a data field are 1234567890 and -");
@@ -264,9 +264,9 @@ error100:
 	}  // end of while on bDone
 
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"tutRecursiveInputIntx2 found valid input at line %i\niNumData = %i, Data =",__LINE__,*iNumData);
-	if (*iNumData > 0 ) for (int idat=0;idat<*iNumData;idat++) dfprintf(__LINE__,__FILE__,TRACE," %i,",Data[idat]);
-	dfprintf(__LINE__,__FILE__,TRACE,"\n");
+	dfprintf2(__LINE__,__FILE__,TRACE,"tutRecursiveInputIntx2 found valid input at line %i\niNumData = %i, Data =",__LINE__,*iNumData);
+	if (*iNumData > 0 ) for (int idat=0;idat<*iNumData;idat++) dfprintf2(__LINE__,__FILE__,TRACE," %i,",Data[idat]);
+	dfprintf2(__LINE__,__FILE__,TRACE,"\n");
 #endif
 
 	return(SUCCESS);

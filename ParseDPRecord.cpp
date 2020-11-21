@@ -27,7 +27,7 @@ int ParseDPRecord ( char * lpsEditedResource , int iLenResource , DPINFO *DPInfo
 // save some memory for the DP text
 	if ( (*szDPText = (char *)malloc(iLenResource)) == NULL ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"malloc for szDPText in ParseDPRecord failed at line %i\n",__LINE__);
+		dfprintf2(__LINE__,__FILE__,TRACE,"malloc for szDPText in ParseDPRecord failed at line %i\n",__LINE__);
 #endif
 		return(-1);
 	}
@@ -157,7 +157,7 @@ int ParseDPRecord ( char * lpsEditedResource , int iLenResource , DPINFO *DPInfo
 	*((*szDPText)+iOutTextOffset) = '\000';
 
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"\33[1;35mparse of display point data\33[0m\n");
+	dfprintf2(__LINE__,__FILE__,TRACE,"\33[1;35mparse of display point data\33[0m\n");
 	char * szftxed =(char *)"fixed";
 	if (DPInfo->bVariableNumberOfFields) szftxed =(char *)"variable";
 	char * szdatatype =(char *)"character";
@@ -166,10 +166,10 @@ int ParseDPRecord ( char * lpsEditedResource , int iLenResource , DPINFO *DPInfo
 	if (DPInfo->iTypeOfData == 4) szdatatype =(char *)"any";
 	char * szTO = (char *)"Or";
 	if (DPInfo->bTo) szTO = (char *)"To";
-	if (*szDPIDString != NULL)dfprintf(__LINE__,__FILE__,TRACE,"Display Point ID = \"%s\"\n",*szDPIDString);
-	dfprintf(__LINE__,__FILE__,TRACE,"%s number of %s fields, %i allowed\n",szftxed,szdatatype,DPInfo->iNumFieldsAllowed);
-	if (DPInfo->iFieldNumber>3)dfprintf(__LINE__,__FILE__,TRACE,"valid inputs: %i %s %i\n",DPInfo->iStartRange,szTO,DPInfo->iEndRange);
-	if (*szDefaultInput != NULL)dfprintf(__LINE__,__FILE__,TRACE,"default input = \"%s\"\n",*szDefaultInput);
+	if (*szDPIDString != NULL)dfprintf2(__LINE__,__FILE__,TRACE,"Display Point ID = \"%s\"\n",*szDPIDString);
+	dfprintf2(__LINE__,__FILE__,TRACE,"%s number of %s fields, %i allowed\n",szftxed,szdatatype,DPInfo->iNumFieldsAllowed);
+	if (DPInfo->iFieldNumber>3)dfprintf2(__LINE__,__FILE__,TRACE,"valid inputs: %i %s %i\n",DPInfo->iStartRange,szTO,DPInfo->iEndRange);
+	if (*szDefaultInput != NULL)dfprintf2(__LINE__,__FILE__,TRACE,"default input = \"%s\"\n",*szDefaultInput);
 #endif
 
 	return (0);

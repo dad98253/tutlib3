@@ -14,7 +14,7 @@
 int initMemFileSystem(int iMemFileSize, int iMemDirSize) {
 
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"calling initMemFileSystem: iMemFileSize,iMemDirSize = %i, %i\n",iMemFileSize,iMemDirSize);
+	dfprintf2(__LINE__,__FILE__,TRACE,"calling initMemFileSystem: iMemFileSize,iMemDirSize = %i, %i\n",iMemFileSize,iMemDirSize);
 #endif
 
 //	struct DIRREC2 {
@@ -67,7 +67,7 @@ int initMemFileSystem(int iMemFileSize, int iMemDirSize) {
 	TotalMemFileSystemSize += sizeof(short unsigned int);
 
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"initMemFileSystem created Directory of length %i, initial TotalMemFileSystemSize = %u\n",uMaxDirSize,TotalMemFileSystemSize);
+	dfprintf2(__LINE__,__FILE__,TRACE,"initMemFileSystem created Directory of length %i, initial TotalMemFileSystemSize = %u\n",uMaxDirSize,TotalMemFileSystemSize);
 #endif
 
 	return(uMaxDirSize);

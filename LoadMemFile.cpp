@@ -28,9 +28,9 @@ int LoadMemFile(Byte ** lpMemDir, const char * szFileName, Byte ** lpMemFile, sh
 #ifdef DEBUG
 	if ( strcmp("tutorDB.txt",szFileName) == 0 ) {
 		int ijkTemp = TUTORUNCOMPFILESIZE+TUTORUNCOMPINDEXSIZE+sizeof(long unsigned int)+sizeof(short unsigned int);
-		dfprintf(__LINE__,__FILE__,TRACE,"in LoadMemFile, found \"%s\", DirSize = %u, DirOffset = %u, expected directory offset = %i\n",szFileName,DirSize,DirOffset,ijkTemp);
+		dfprintf2(__LINE__,__FILE__,TRACE,"in LoadMemFile, found \"%s\", DirSize = %u, DirOffset = %u, expected directory offset = %i\n",szFileName,DirSize,DirOffset,ijkTemp);
 	} else {
-		dfprintf(__LINE__,__FILE__,TRACE,"in LoadMemFile, DirSize = %u, DirOffset = %u, szFileName = \"%s\"\n",DirSize,DirOffset,szFileName);
+		dfprintf2(__LINE__,__FILE__,TRACE,"in LoadMemFile, DirSize = %u, DirOffset = %u, szFileName = \"%s\"\n",DirSize,DirOffset,szFileName);
 	}
 #endif
 
@@ -39,7 +39,7 @@ int LoadMemFile(Byte ** lpMemDir, const char * szFileName, Byte ** lpMemFile, sh
 	for (i=0;i<DirSize;i++) {
 		if(strncmp(szFileName,(const char *)(uncompr+Dir[i].NameOffset),Dir[i].wNamelength) == 0 ){
 #ifdef DEBUG
-			dfprintf(__LINE__,__FILE__,TRACE,"found \"%s\", file size = %u, file offset = %u\n",(const char *)(uncompr+Dir->NameOffset),Dir->wFileSize,Dir->FileOffset);
+			dfprintf2(__LINE__,__FILE__,TRACE,"found \"%s\", file size = %u, file offset = %u\n",(const char *)(uncompr+Dir->NameOffset),Dir->wFileSize,Dir->FileOffset);
 #endif
 			break;
 		}

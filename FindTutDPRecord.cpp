@@ -14,7 +14,7 @@ int FindTutDPRecord(int iDisplayPointID){
 
 	if ( lpTutMemFile == NULL ) {  // check if the tutor memory file has been loaded
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, lpTutMemFile == NULL\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, lpTutMemFile == NULL\n");
 #endif
 		return(-2);
 	}
@@ -24,12 +24,12 @@ int FindTutDPRecord(int iDisplayPointID){
 	int iRecTotal = *(int *)(lpTutMemFile+IndexOffset);		// get the size of the index (in first word of index)
 	pToIndex = (short unsigned int *)(lpTutMemFile+IndexOffset+sizeof(int));  // calculate a pointer to the start of the index entries
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, lpTutMemFile == 0x%x\n",lpTutMemFile);
-	dfprintf(__LINE__,__FILE__,TRACE,"IndexOffset = %u, pointer to index =0x%x, iRecTotal = %i\n",IndexOffset,pToIndex,iRecTotal);
+	dfprintf2(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, lpTutMemFile == 0x%x\n",lpTutMemFile);
+	dfprintf2(__LINE__,__FILE__,TRACE,"IndexOffset = %u, pointer to index =0x%x, iRecTotal = %i\n",IndexOffset,pToIndex,iRecTotal);
 #endif
 	if ( iDisplayPointID < 0 || iDisplayPointID > iRecTotal ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"bad iDisplayPointID (%i)\n",iDisplayPointID);
+		dfprintf2(__LINE__,__FILE__,TRACE,"bad iDisplayPointID (%i)\n",iDisplayPointID);
 #endif
 		return(-1);
 	}
@@ -46,16 +46,16 @@ int FindTutDPRecord(int iDisplayPointID){
 	short unsigned int uRecLen;
 	//	uRecLen = *(short unsigned int *)(pIndexRec->wUncompressedsize);
 	uRecLen = pIndexRec->wUncompressedsize;
-	dfprintf(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, iDisplayPointID = %i found at uRecOffset = %u, with uRecLen = %u\nSearching for null byte in record...",iDisplayPointID,uRecOffset,uRecLen);
+	dfprintf2(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, iDisplayPointID = %i found at uRecOffset = %u, with uRecLen = %u\nSearching for null byte in record...",iDisplayPointID,uRecOffset,uRecLen);
 	if (strlen((const char *)(lpTutMemFile+uRecOffset)) > 1000 ) {
-		dfprintf(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, Dp Record size appears to be way too long!\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, Dp Record size appears to be way too long!\n");
 		return(8);
 	}
 	if (strlen((const char *)(lpTutMemFile+uRecOffset)) != (unsigned int)(uRecLen-1) ) {
-		dfprintf(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, Dp Record size in the index is different from the strlen() size, uRecLen = %u, strlen() = %i\n",uRecLen,strlen((const char *)(lpTutMemFile+uRecOffset)));;
+		dfprintf2(__LINE__,__FILE__,TRACE,"in tutDisplayTextPromptx, Dp Record size in the index is different from the strlen() size, uRecLen = %u, strlen() = %i\n",uRecLen,strlen((const char *)(lpTutMemFile+uRecOffset)));;
 		return(9);
 	}
-	dfprintf(__LINE__,__FILE__,TRACE,"iDisplayPointID = %i looks like this:\n%s",iDisplayPointID,(const char *)(lpTutMemFile+uRecOffset));
+	dfprintf2(__LINE__,__FILE__,TRACE,"iDisplayPointID = %i looks like this:\n%s",iDisplayPointID,(const char *)(lpTutMemFile+uRecOffset));
 #endif
 
  return((int)uRecOffset);

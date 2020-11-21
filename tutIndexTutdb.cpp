@@ -63,7 +63,7 @@ int tutIndexTutdb(Byte ** lpMemFile, int * iFileSize, char * szIncludeFileName )
 		}
 	}
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"in tutIndexTutdb, initial value of uncomprLen = %lu\n",uncomprLen);
+	dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"in tutIndexTutdb, initial value of uncomprLen = %lu\n",uncomprLen);
 #endif
 // uncomprLen is initially set to a big number (BUFFERSIZE is set in tutlib03.h).
 // NOTE : You will need to set BUFFERSIZE big enough to hold all of the memory file system! So, if the 
@@ -85,7 +85,7 @@ int tutIndexTutdb(Byte ** lpMemFile, int * iFileSize, char * szIncludeFileName )
 	TutorIndexOffset = (short unsigned int*)(uncompr+TotalFileSize);	// save a pointer to the first word in the file for the record index offset, this will be saved later
 	TotalFileSize += sizeof(short unsigned int);		// save space for offset to the record index (note that this offset is relative to the start of the tutor file
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"the actual start of the tutor data records is at %u (should be %u)\n",TotalFileSize-iInitailFileOffset,sizeof(short unsigned int));
+	dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"the actual start of the tutor data records is at %u (should be %u)\n",TotalFileSize-iInitailFileOffset,sizeof(short unsigned int));
 #endif
 	while(1) {
 		if( ( iNumCharsRead = inputl(fDBFile, buf, BUFFERSIZE) ) < 0 ) break;	// read one line of the tutorial database file from disk until we hit end of file
@@ -107,13 +107,13 @@ int tutIndexTutdb(Byte ** lpMemFile, int * iFileSize, char * szIncludeFileName )
 #endif
 						fprintf(fSeqFile,"%s\n",buf+iFirstChar(buf+6)+6);			// write it out to the sequential file (used for debug only now days...)
 #ifdef DEBUG
-			dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"*WGID %s (rec #%i) found at offset %u, %i bytes written to fSeqFile\n",szGID,iRecNumber-1,TotalFileSize-iInitailFileOffset,iNbRet);
+			dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"*WGID %s (rec #%i) found at offset %u, %i bytes written to fSeqFile\n",szGID,iRecNumber-1,TotalFileSize-iInitailFileOffset,iNbRet);
 #endif
 			continue;													// done with WGID data
 		}
 		if ( strncmp (buf+1,"*WEOR",(size_t)5) == 0 ) {					// found a *WEOR identifier
 #ifdef DEBUG
-			dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"*WEOR found at offset %u\n",TotalFileSize-iInitailFileOffset);
+			dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"*WEOR found at offset %u\n",TotalFileSize-iInitailFileOffset);
 #endif
 //			if(strlen(buf)>1){
 //				int iNumCharWrite = sprintf((char *)(uncompr+TotalFileSize),"%s\n",szEOR);
@@ -125,7 +125,7 @@ int tutIndexTutdb(Byte ** lpMemFile, int * iFileSize, char * szIncludeFileName )
 			iTotRecSize++;					// iTotRecSize is the size of the display point record
 			index.wRecordSize = iTotRecSize;	// save the size of the record in the index struct (fyi, INDEXREC2 is defined in tutlib01.h)
 #ifdef DEBUG
-			dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
+			dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
 #endif
 			iTotRecSize = 0;				// get ready for next record
 			memcpy(cIndexFile+TotalIndexSize, &index, sizeof(index) );		// copy the index struct to the cIndexFile temp memory file
@@ -171,7 +171,7 @@ int tutIndexTutdb(Byte ** lpMemFile, int * iFileSize, char * szIncludeFileName )
 		iTotRecSize++;
 		index.wRecordSize = iTotRecSize;
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"last record saved... iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
+		dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"last record saved... iTotRecSize = %u, index offset (rel to start of index) = %u\n",iTotRecSize,TotalIndexSize);
 #endif
 		iTotRecSize = 0;
 		memcpy(cIndexFile+TotalIndexSize, &index, sizeof(index) );
@@ -184,8 +184,8 @@ int tutIndexTutdb(Byte ** lpMemFile, int * iFileSize, char * szIncludeFileName )
 
 	*TutorIndexOffset = (short unsigned int)(TotalFileSize-iInitailFileOffset);
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"TotalFileSize = %lu, TotalIndexSize = %lu, iRecNumber = %i\n",TotalFileSize-iInitailFileOffset,TotalIndexSize,iRecNumber);
-	dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"calculated  TutorIndexOffset = %u\n",*TutorIndexOffset);
+	dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"TotalFileSize = %lu, TotalIndexSize = %lu, iRecNumber = %i\n",TotalFileSize-iInitailFileOffset,TotalIndexSize,iRecNumber);
+	dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"calculated  TutorIndexOffset = %u\n",*TutorIndexOffset);
 #endif
 
 	memcpy(uncompr+TotalFileSize,&iRecNumber,sizeof(iRecNumber));		// tack the number of records onto the memory file
@@ -193,7 +193,7 @@ int tutIndexTutdb(Byte ** lpMemFile, int * iFileSize, char * szIncludeFileName )
 	TotalIndexSize += sizeof(iRecNumber);
 	uncomprLen = TotalFileSize + TotalIndexSize;		// calculate the size of the file. uncomprLen will returned via the iFileSize calling argument
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TUTINDEXDBDBG,"total size of tutor file (uncompressed) = %lu\n",uncomprLen);
+	dfprintf2(__LINE__,__FILE__,TUTINDEXDBDBG,"total size of tutor file (uncompressed) = %lu\n",uncomprLen);
 #endif
 // tack some more stuff onto the end of the include file. it can be used to check the uncompressed array at runtime
 	if ( szIncludeFileName != NULL ) {

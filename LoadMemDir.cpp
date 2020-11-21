@@ -18,7 +18,7 @@ int LoadMemDir(Byte ** lpMemDir){
 
     if ( bMemDirLoaded ) {
 #ifdef DEBUG
-    	dfprintf(__LINE__,__FILE__,TRACE,"LoadMemDir called when MemDir is already loaded\n");
+    	dfprintf2(__LINE__,__FILE__,TRACE,"LoadMemDir called when MemDir is already loaded\n");
 #endif
 		return(3);
     }
@@ -32,7 +32,7 @@ int LoadMemDir(Byte ** lpMemDir){
         fprintf(stderr, "warning: different zlib version\nthis is a programming problem...\n");
     }
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"zlib version %s = 0x%04x, compile flags = 0x%lx\n",ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
+	dfprintf2(__LINE__,__FILE__,TRACE,"zlib version %s = 0x%04x, compile flags = 0x%lx\n",ZLIB_VERSION, ZLIB_VERNUM, zlibCompileFlags());
 #endif
 
 	Byte *uncompr;
@@ -45,7 +45,7 @@ int LoadMemDir(Byte ** lpMemDir){
 		fprintf(stderr, "calloc failed in LoadMemDir... out of memory!\nneed at least %i more bytes to clear this error, but more will likely be required to continue running\n",(int)uncomprLen);
 		fprintf(stderr, "if you recieved this error, your computer must have a very small memory\nyou likely need several megaBytes more to successfully run My Secret Box!\n");
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"calloc(%u,%i) failed in LoadMemDir\n",(uInt)uncomprLen,1);
+	dfprintf2(__LINE__,__FILE__,TRACE,"calloc(%u,%i) failed in LoadMemDir\n",(uInt)uncomprLen,1);
 #endif
 		return(2);
 	} else {
@@ -56,7 +56,7 @@ int LoadMemDir(Byte ** lpMemDir){
 	CHECK_ERR(err, "uncompress");
 
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"uncompressed file size is %u\n",uncomprLen);
+	dfprintf2(__LINE__,__FILE__,TRACE,"uncompressed file size is %u\n",uncomprLen);
 #endif
 
 	*lpMemDir = uncompr;

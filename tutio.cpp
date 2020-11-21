@@ -3,6 +3,12 @@
  *
  *  Created on: Feb 10, 2016
  *      Author: dad
+ *
+ *      The original idea for and design of tutor sprang from the crteative mind of L. Zimmerman in the 1970s.
+ *      It's purpose was to facilitate the implementation of interactive tutorial scripts designed by A. Grisham.
+ *      Many programmers contributed to improvements over the years. This c version is a re-write of the original
+ *      fortran code. However, when possible, similar interfaces and variable names have been used to minimize
+ *      the confusion of old fart programmers like myself.
  */
 
 #ifdef WINDOZE
@@ -150,7 +156,7 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 
 // test tutor file
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "memory file zlib version = \"%s\"\n",myzlibVersion);
+		dfprintf2(__LINE__,__FILE__,TRACE, "memory file zlib version = \"%s\"\n",myzlibVersion);
 #endif
 	if ( !bGenMemFileSource ) uncomprMemFileSystem = ucMemFileSystemData;		// if we didn't just finished generating the
 																				// memory file system, use the old data that
@@ -158,14 +164,14 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 	int LMFerror;
 	if ( ( LMFerror = LoadMemFile2("tutorDB.txt", &lpTutMemFile, &FileSize ) ) != 0 ) {		// extract tutor the file
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "LoadMemFile2 failed in \"tutorDB.txt\", LMFerror = %i\n",LMFerror);
+		dfprintf2(__LINE__,__FILE__,TRACE, "LoadMemFile2 failed in \"tutorDB.txt\", LMFerror = %i\n",LMFerror);
 #endif
 
 		return(LMFerror);
 	}
 
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "LoadMemFile2 extracted \"%s\", size returned = %i, size should be = %i\n","tutorDB.txt",FileSize,iTutMemFileSize);
+		dfprintf2(__LINE__,__FILE__,TRACE, "LoadMemFile2 extracted \"%s\", size returned = %i, size should be = %i\n","tutorDB.txt",FileSize,iTutMemFileSize);
 #endif
 
 #ifdef DEBUG
@@ -182,34 +188,34 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 		        return(true);
 		    }
 
-			dfprintf(__LINE__,__FILE__,TRACE,"\33[1;35mGetFileTime\33[0m stat of \'%s\':\nFile type:                ",sztty);
+			dfprintf2(__LINE__,__FILE__,TRACE,"\33[1;35mGetFileTime\33[0m stat of \'%s\':\nFile type:                ",sztty);
 
 			switch (sb.st_mode & S_IFMT) {
-				case S_IFREG:  dfprintf(__LINE__,__FILE__,TRACE,"regular file\n");            break;
-				case S_IFDIR:  dfprintf(__LINE__,__FILE__,TRACE,"directory\n");               break;
+				case S_IFREG:  dfprintf2(__LINE__,__FILE__,TRACE,"regular file\n");            break;
+				case S_IFDIR:  dfprintf2(__LINE__,__FILE__,TRACE,"directory\n");               break;
 #ifndef WINDOZE
-				case S_IFBLK:  dfprintf(__LINE__,__FILE__,TRACE,"block device\n");            break;
-				case S_IFCHR:  dfprintf(__LINE__,__FILE__,TRACE,"character device\n");        break;
-				case S_IFIFO:  dfprintf(__LINE__,__FILE__,TRACE,"FIFO/pipe\n");               break;
-				case S_IFLNK:  dfprintf(__LINE__,__FILE__,TRACE,"symlink\n");                 break;
-				case S_IFSOCK: dfprintf(__LINE__,__FILE__,TRACE,"socket\n");                  break;
+				case S_IFBLK:  dfprintf2(__LINE__,__FILE__,TRACE,"block device\n");            break;
+				case S_IFCHR:  dfprintf2(__LINE__,__FILE__,TRACE,"character device\n");        break;
+				case S_IFIFO:  dfprintf2(__LINE__,__FILE__,TRACE,"FIFO/pipe\n");               break;
+				case S_IFLNK:  dfprintf2(__LINE__,__FILE__,TRACE,"symlink\n");                 break;
+				case S_IFSOCK: dfprintf2(__LINE__,__FILE__,TRACE,"socket\n");                  break;
 #endif		// WINDOZE
-				default:       dfprintf(__LINE__,__FILE__,TRACE,"unknown\n");                 break;
+				default:       dfprintf2(__LINE__,__FILE__,TRACE,"unknown\n");                 break;
 			}
-			dfprintf(__LINE__,__FILE__,TRACE,"I-node number:            %ld\n", (long) sb.st_ino);
-			dfprintf(__LINE__,__FILE__,TRACE,"Mode:                     %lo (octal)\n",(unsigned long) sb.st_mode);
-			dfprintf(__LINE__,__FILE__,TRACE,"Link count:               %ld\n", (long) sb.st_nlink);
-			dfprintf(__LINE__,__FILE__,TRACE,"Ownership:                UID=%ld   GID=%ld\n",(long) sb.st_uid, (long) sb.st_gid);
+			dfprintf2(__LINE__,__FILE__,TRACE,"I-node number:            %ld\n", (long) sb.st_ino);
+			dfprintf2(__LINE__,__FILE__,TRACE,"Mode:                     %lo (octal)\n",(unsigned long) sb.st_mode);
+			dfprintf2(__LINE__,__FILE__,TRACE,"Link count:               %ld\n", (long) sb.st_nlink);
+			dfprintf2(__LINE__,__FILE__,TRACE,"Ownership:                UID=%ld   GID=%ld\n",(long) sb.st_uid, (long) sb.st_gid);
 #ifdef WINDOZE
-			dfprintf(__LINE__,__FILE__,TRACE,"File size:                %lld bytes\n",(__int64) sb.st_size);
+			dfprintf2(__LINE__,__FILE__,TRACE,"File size:                %lld bytes\n",(__int64) sb.st_size);
 #else		// WINDOZE
-			dfprintf(__LINE__,__FILE__,TRACE,"Preferred I/O block size: %ld bytes\n",(long) sb.st_blksize);
-			dfprintf(__LINE__,__FILE__,TRACE,"File size:                %lld bytes\n",(long long) sb.st_size);
-			dfprintf(__LINE__,__FILE__,TRACE,"Blocks allocated:         %lld\n",(long long) sb.st_blocks);
+			dfprintf2(__LINE__,__FILE__,TRACE,"Preferred I/O block size: %ld bytes\n",(long) sb.st_blksize);
+			dfprintf2(__LINE__,__FILE__,TRACE,"File size:                %lld bytes\n",(long long) sb.st_size);
+			dfprintf2(__LINE__,__FILE__,TRACE,"Blocks allocated:         %lld\n",(long long) sb.st_blocks);
 #endif		// WINDOZE
-			dfprintf(__LINE__,__FILE__,TRACE,"Last status change:       %s", ctime(&sb.st_ctime));
-			dfprintf(__LINE__,__FILE__,TRACE,"Last file access:         %s", ctime(&sb.st_atime));
-			dfprintf(__LINE__,__FILE__,TRACE,"Last file modification:   %s", ctime(&sb.st_mtime));
+			dfprintf2(__LINE__,__FILE__,TRACE,"Last status change:       %s", ctime(&sb.st_ctime));
+			dfprintf2(__LINE__,__FILE__,TRACE,"Last file access:         %s", ctime(&sb.st_atime));
+			dfprintf2(__LINE__,__FILE__,TRACE,"Last file modification:   %s", ctime(&sb.st_mtime));
 #endif		// DEBUG
 //	test tutor
 #ifdef TESTTUTX2
@@ -220,27 +226,27 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 	char szpassword[151];
 	tutConvertString (szpassword, 150);
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "tutConvertStringx2 returned \"%s\"\n",szpassword);
+		dfprintf2(__LINE__,__FILE__,TRACE, "tutConvertStringx2 returned \"%s\"\n",szpassword);
 #endif		// DEBUG
 
 	tutDisplayPrompt ( NO_DATABASE , 0 );
 	int imyvalue;
 	imyvalue = (int)tutFetchDatax2(1);
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "tutFetchDatax2 returned \"%i\"\n",imyvalue);
+		dfprintf2(__LINE__,__FILE__,TRACE, "tutFetchDatax2 returned \"%i\"\n",imyvalue);
 #endif		// DEBUG
 
 	tutDisplayPrompt ( SET_MIN_BACKUP_AGE , 1 , "MINBACKUPAGE" , "20");
 	imyvalue = (int)tutFetchDatax2(1);
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "tutFetchDatax2 returned \"%i\"\n",imyvalue);
+		dfprintf2(__LINE__,__FILE__,TRACE, "tutFetchDatax2 returned \"%i\"\n",imyvalue);
 #endif		// DEBUG
 
 	tutDisplayPrompt ( MAIN_MENU , 4 , "COLOR1" , "\33[1;31m" , "COLOR2" , "\33[0m" , "BANNER" , "My VERY Kool Banner!" , "COLOR3" , "\33[1;32m");
 // old line //	tutDisplayTextPromptx2 ( MAIN_MENU , 3 , "COLOR1" , "1New collor 1" , "COLOR3" , "3my new collor 3" , "BANNER" , "My VERY Kool Banner!" );
 	imyvalue = (int)tutFetchDatax2(1);
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "tutFetchDatax2 returned \"%i\"\n",imyvalue);
+		dfprintf2(__LINE__,__FILE__,TRACE, "tutFetchDatax2 returned \"%i\"\n",imyvalue);
 #endif		// DEBUG
 
 //	const char szDispPtNameLong[] = {"ENTER RANGE1"};
@@ -250,9 +256,9 @@ int tutio (char *szInputFile, char *szOutputFile, char * szTutlogFilenameParm , 
 	sprintf(szSizeData,"%i",DATADIM);
 	tutRecursiveInputInt (ENTER_RANGE1, ENTER_RANGE1B, DataFromTut, DATADIM, &iNumData, 4, "NUMSIZ", szSizeData, "INT" , "ANY" , "ITEMS", "Index Numbers", "OPERATION", "List");
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE, "tutRecursiveInputIntx2 returned \"%i\" values\nvaluse are :",iNumData);
-		for (int ixxx=0;ixxx<iNumData;ixxx++) dfprintf(__LINE__,__FILE__,TRACE, " %i,",DataFromTut[ixxx]);
-		dfprintf(__LINE__,__FILE__,TRACE, "\n");
+		dfprintf2(__LINE__,__FILE__,TRACE, "tutRecursiveInputIntx2 returned \"%i\" values\nvaluse are :",iNumData);
+		for (int ixxx=0;ixxx<iNumData;ixxx++) dfprintf2(__LINE__,__FILE__,TRACE, " %i,",DataFromTut[ixxx]);
+		dfprintf2(__LINE__,__FILE__,TRACE, "\n");
 #endif		// DEBUG
 #endif  // TESTTUTX2
 
@@ -284,7 +290,7 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 			printf("error in tutCompressAndIndexTutdb\n");
 		}
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"tutCompressAndIndexTutdb compressed %u records\n",NumCompressedRecords);
+		dfprintf2(__LINE__,__FILE__,TRACE,"tutCompressAndIndexTutdb compressed %u records\n",NumCompressedRecords);
 #endif
 
 //    Byte * lpTutMemFile;
@@ -300,14 +306,14 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 			printf("error in LoadMemDir\n");
 		}
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"LoadMemDir done\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"LoadMemDir done\n");
 #endif
 // load the tutorial database file from the memory file system
 		if ( LoadMemFile(&lpMemDir, "tutorDB.txt", &lpTutMemFile, FileSize) < 0) {
 			printf("error in LoadMemFile\n");
 		}
 	#ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"LoadMemFile done\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"LoadMemFile done\n");
 	#endif
 //	tutDisplayTextPromptx ( ENTER_MASTER_PASSWORD , 0 );   //  SET_MIN_BACKUP_AGE       MAIN_MENU
 //	tutDisplayTextPromptx ( NO_DATABASE , 0 );
@@ -321,7 +327,7 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 			printf("error in UnloadMemDir\n");
 		}
 	#ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"UnloadMemDir done\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"UnloadMemDir done\n");
 	#endif
 
 	}	//////////			end of if on iMemFileFormat
@@ -332,7 +338,7 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 // initialize the system for building
     int iDirSize = initMemFileSystem(30000, 10);
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"initMemFileSystem returned dir size = %u\n",iDirSize);
+	dfprintf2(__LINE__,__FILE__,TRACE,"initMemFileSystem returned dir size = %u\n",iDirSize);
 #endif
 
 
@@ -348,7 +354,7 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 	ucSettingsResetREADME = (Byte *)malloc(RESETREADMEBUFFSIZE);		// get some scratch memory
 	if ( ucSettingsResetREADME == NULL ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"malloc failed for ucSettingsResetREADME in tutio\n",iDirSize);
+		dfprintf2(__LINE__,__FILE__,TRACE,"malloc failed for ucSettingsResetREADME in tutio\n",iDirSize);
 #endif
 		return(-8);
 	}
@@ -356,14 +362,14 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 	fclose(fSettingsResetREADME);
 	if ( AddMemFile(ucSettingsResetREADME, iSettingsResetREADMESize, (char *)"SettingsResetREADME.txt", 1) < 0 ) {  // add it to the mem file system
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"AddMemFile failed for SettingsResetREADME.txt in tutio\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"AddMemFile failed for SettingsResetREADME.txt in tutio\n");
 #endif
 		free(ucSettingsResetREADME);		// free the scratch memory
 		return(-9);
 	}
 	free(ucSettingsResetREADME);		// free the scratch memory
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"SettingsResetREADME.txt added to mem file system\n");
+	dfprintf2(__LINE__,__FILE__,TRACE,"SettingsResetREADME.txt added to mem file system\n");
 #endif
 
 
@@ -373,16 +379,16 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 // create the tokenized and indexed tutor datbase file
 	if ( ( iNumerTutRecords = tutIndexTutdb( &lpTutMemFile, iTutMemFileSize, NULL ) ) <=0 ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"tutIndexTutdb failed in tutio, iNumerTutRecords = %i\n",iNumerTutRecords);
+		dfprintf2(__LINE__,__FILE__,TRACE,"tutIndexTutdb failed in tutio, iNumerTutRecords = %i\n",iNumerTutRecords);
 #endif
 		return(-11);
 	}
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"tutIndexTutdb created %i tutor records, mem file size = %i\n",iNumerTutRecords,*iTutMemFileSize);
+	dfprintf2(__LINE__,__FILE__,TRACE,"tutIndexTutdb created %i tutor records, mem file size = %i\n",iNumerTutRecords,*iTutMemFileSize);
 #endif
 	if ( AddMemFile(lpTutMemFile, *iTutMemFileSize, (char *)"tutorDB.txt", 1) < 0 ) {  // add it to the mem file system (compressed)
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"AddMemFile failed for tutorDB.txt in tutio\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"AddMemFile failed for tutorDB.txt in tutio\n");
 #endif
 		free(lpTutMemFile);		// free the tutor file
 		return(-12);
@@ -390,20 +396,20 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 	free(lpTutMemFile);		// free the tutor file
 	lpTutMemFile = NULL;
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"tutorDB.txt added to mem file system\n");
+	dfprintf2(__LINE__,__FILE__,TRACE,"tutorDB.txt added to mem file system\n");
 #endif
 
 
 	CloseMemFileSystem();				// close the mem file system (saves directory info...)
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"mem file system directory created and saved\n");
+	dfprintf2(__LINE__,__FILE__,TRACE,"mem file system directory created and saved\n");
 #endif
 
 	if( bGenMemFileSource ) {
 		CreateMemFileSource();	// produce new source code for the mem file system
 
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"source code for the mem file system created and saved\n");
+	dfprintf2(__LINE__,__FILE__,TRACE,"source code for the mem file system created and saved\n");
 #endif
 	}
 
@@ -415,7 +421,7 @@ int GenMemFile (short unsigned int *FileSize,int *iTutMemFileSize,bool bGenMemFi
 		                                              "9e9n9d9o9f9f9i9l9e9" , ""
 													  ) ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"ExtractFile failed in tutio\n");
+		dfprintf2(__LINE__,__FILE__,TRACE,"ExtractFile failed in tutio\n");
 #endif
 		return (-14);
 	}   */

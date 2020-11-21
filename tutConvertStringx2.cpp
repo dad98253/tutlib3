@@ -12,19 +12,19 @@
 int tutConvertString (char * szString, int iStringSize) {
 	if ( szString == NULL ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"szString == NULL in tutConvertStringx2 at line %i\n",__LINE__);
+		dfprintf2(__LINE__,__FILE__,TRACE,"szString == NULL in tutConvertStringx2 at line %i\n",__LINE__);
 #endif
 		return(BADUCVRTCCALL);
 	}
 	if ( iStringSize <= 0 ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"iStringSize <= 0 in tutConvertStringx2 at line %i\n",__LINE__);
+		dfprintf2(__LINE__,__FILE__,TRACE,"iStringSize <= 0 in tutConvertStringx2 at line %i\n",__LINE__);
 #endif
 		return(BADUCVRTCCALL);
 	}
 	if ( sztutNextLine == NULL ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"sztutNextLine == NULL in tutConvertStringx2 at line %i\n",__LINE__);
+		dfprintf2(__LINE__,__FILE__,TRACE,"sztutNextLine == NULL in tutConvertStringx2 at line %i\n",__LINE__);
 #endif
 		return(BADUCVRTCCALL);
 	}

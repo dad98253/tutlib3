@@ -46,7 +46,7 @@ int tutDisplayWorkerL2 ( int iDisplayPointID, int iCallerID, int NumReplacements
 	int iRet;
 	if( ( iRet = FindTutDPRecord( iDisplayPointID ) ) < 0 ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"FindTutDPRecord failed at line %i in tutDisplayWorker, iRet = %i\n",__LINE__,iRet);
+		dfprintf2(__LINE__,__FILE__,TRACE,"FindTutDPRecord failed at line %i in tutDisplayWorker, iRet = %i\n",__LINE__,iRet);
 #endif
 		return (RET_ABORTPROGRAM);
 	}
@@ -56,13 +56,13 @@ int tutDisplayWorkerL2 ( int iDisplayPointID, int iCallerID, int NumReplacements
     int iLenResource;
 	if ( (iLenResource = ReplaceText2( (const char *)(lpTutMemFile+uRecOffset) , &lpsEditedResource , NumReplacements , ap )) < 0 ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"ReplaceText2 failed at line %i in tutDisplayWorker, iRet = %i\n",__LINE__,iLenResource);
+		dfprintf2(__LINE__,__FILE__,TRACE,"ReplaceText2 failed at line %i in tutDisplayWorker, iRet = %i\n",__LINE__,iLenResource);
 #endif
 		return(RET_ABORTPROGRAM);
 	}
 #ifdef DEBUG
-//	dfprintf(__LINE__,__FILE__,TRACE,"iDisplayPointID = %i looks like this after string replacement in %s :\n%s",iDisplayPointID,__MYFILE__,lpsEditedResource);
-	dfprintf(__LINE__,__FILE__,TRACE,"iDisplayPointID = %i looks like this after string replacement in %s :\n%s",iDisplayPointID,"??",lpsEditedResource);
+//	dfprintf2(__LINE__,__FILE__,TRACE,"iDisplayPointID = %i looks like this after string replacement in %s :\n%s",iDisplayPointID,__MYFILE__,lpsEditedResource);
+	dfprintf2(__LINE__,__FILE__,TRACE,"iDisplayPointID = %i looks like this after string replacement in %s :\n%s",iDisplayPointID,"??",lpsEditedResource);
 #endif
 	// parse the DP rcord
 //	struct DPINFO {
@@ -81,7 +81,7 @@ int tutDisplayWorkerL2 ( int iDisplayPointID, int iCallerID, int NumReplacements
 	char * szDPText = NULL;
 	if ( (iRet = ParseDPRecord ( lpsEditedResource , iLenResource , &DPInfo , &szDefaultInput , &szDPIDString , &szDPText )) !=0 ) {
 #ifdef DEBUG
-		dfprintf(__LINE__,__FILE__,TRACE,"ParseDPRecord failed at line %i in tutDisplayWorker, iRet = %i\n",__LINE__,iRet);
+		dfprintf2(__LINE__,__FILE__,TRACE,"ParseDPRecord failed at line %i in tutDisplayWorker, iRet = %i\n",__LINE__,iRet);
 #endif
 		return (RET_ABORTPROGRAM);
 	}
@@ -102,7 +102,7 @@ int tutDisplayWorkerL2 ( int iDisplayPointID, int iCallerID, int NumReplacements
 		}
 	}
 #ifdef DEBUG
-	dfprintf(__LINE__,__FILE__,TRACE,"tutDisplayWorker found valid input at line %i, iRet = %i\n",__LINE__,iRet);
+	dfprintf2(__LINE__,__FILE__,TRACE,"tutDisplayWorker found valid input at line %i, iRet = %i\n",__LINE__,iRet);
 #endif
 	if ( szDefaultInput != NULL ) free( szDefaultInput );
 	if ( szDPIDString != NULL ) free( szDPIDString );
